@@ -13,6 +13,16 @@
 - <a href="https://github.com/Marcos-Yogi">**Marcos Hiroshi**</a>
 - <a href="https://github.com/Vinishireis">**Vinícius Nishimura Reis**</a>
 
+### 🧑🏻‍🏫👩🏻‍🏫Professores Orientadores  
+
+## Professores Orientadores:  
+- <a href="https://www.linkedin.com/in/cristina-machado-corr%C3%AAa-leite-630309160/">Cristina Machado Corrêa Leite</a> 
+- <a href="https://www.linkedin.com/in/dolemes/">David De Oliveira Lemes</a> 
+- <a href="https://www.linkedin.com/in/francisco-escobar/">Francisco de Souza Escobar</a> 
+- <a href="https://www.linkedin.com/in/katia-bossi/">Katia Milani Lara Bossi</a> 
+- <a href="https://www.linkedin.com/in/leonardo-fabris-lugoboni-a3369416/">Leonardo Fabris Lugoboni</a>
+
+
 ---
 
 ## 📌 Sobre o Projeto
