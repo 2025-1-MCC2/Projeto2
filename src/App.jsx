@@ -6,13 +6,14 @@ import Auth from "./components/Login_Signup/Auth";
 import ResetPassword from "./components/Login_Signup/ResetPassword";
 import ForgotPassword from "./components/Login_Signup/ForgotPassword";
 import FAQ from "./components/FAQ/FAQ";
+import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
 import TermsConditions from "./components/TermsConditions/TermsConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy";
 import ProfileSettings from "./components/ProfileSettings/ProfileSettings ";
 import SocialImpact from "./components/Socialmpact/SocialImpact";
 import Segment from "./components/Segment/Segment"; 
-
+import NotFound from "./components/404/404";
 
 const App = () => {
   const isAuthenticated = true; // Simule um usuário autenticado (troque para `true` se necessário)
@@ -22,7 +23,7 @@ const App = () => {
     <>
       {/* Navbar não visível na tela de Auth, Esqueci a Senha e Redefinir Senha */}
       {!["/auth", "/forgot-password", "/reset-password"].includes(location.pathname) && <Navbar />}
-      
+
       <Routes>
         {/* Página Inicial */}
         <Route path="/" element={<Home />} />
@@ -42,6 +43,9 @@ const App = () => {
         {/* Rota FAQ */}
         <Route path="/faq" element={<FAQ />} />
 
+        {/* Rota Sobre Nós */}
+        <Route path="/about" element={<About />} />
+
         {/* Rota Contato */}  
         <Route path="/contact" element={<Contact />} />
 
@@ -51,9 +55,6 @@ const App = () => {
         {/* Rota Política de Privacidade */}
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         
-        {/* Rota 404 */}
-        <Route path="*" element={<h1>Página não encontrada</h1>} />
-
         {/* Rota Tela de Configurações de Perfil */}
         <Route path="/profile-settings" element={<ProfileSettings />} />
 
@@ -62,8 +63,9 @@ const App = () => {
         
         {/* Rota Segmento */}
         <Route path="/segment" element={<Segment />} />
-    
-        {/* Rota Sobre Nós */}
+        
+        {/* Rota 404 */}
+        <Route path="*" element={<NotFound />} />  {/* Captura todas as rotas não definidas */}
       </Routes>
     </>
   );

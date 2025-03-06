@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { SlideRight, FadeIn } from "../../utility/animation"; // Importe as animações
 import { FaBook, FaLightbulb, FaPaintBrush, FaHandsHelping } from "react-icons/fa";
+import Footer from "../Footer/Footer"; // Importe o Footer
+
 
 const Segment = () => {
   return (
@@ -146,6 +148,8 @@ const Segment = () => {
           </motion.button>
         </div>
       </div>
+      {/* Footer */}
+      <Footer />
     </>
   );
 };
