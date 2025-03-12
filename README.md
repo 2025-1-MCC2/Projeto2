@@ -46,28 +46,43 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 - 🔧 **Outras Ferramentas:** ESLint, Prettier, PostCSS
 
 ---
-
 ## 📂 Estrutura do Projeto
-
 ```
 📦 Projeto
-├── 📂 backend          # Código do backend (.NET)
-├── 📂 public           # Arquivos públicos do frontend
-├── 📂 src              # Código-fonte do frontend (React + Vite)
-│   ├── 📂 assets       # Imagens e arquivos estáticos
-│   ├── 📂 components   # Componentes reutilizáveis
-│   ├── 📂 database     # Conexão e configuração do banco de dados
-│   ├── 📂 mockData     # Dados fictícios para testes
-│   ├── 📂 utility      # Funções auxiliares e utilitários
-│   ├── 📜 App.jsx      # Componente raiz da aplicação
-│   ├── 📜 index.css    # Estilos globais
-│   ├── 📜 main.jsx     # Arquivo principal do React
-├── 📜 .env             # Configurações de ambiente
-├── 📜 package.json     # Dependências do projeto
-├── 📜 tailwind.config.js # Configuração do Tailwind CSS
-├── 📜 vite.config.js   # Configuração do Vite
-└── 📜 README.md        # Documentação do projeto
-```
+├── 📂 Calculo_II
+│ ├── 📂 Documentos
+│ │ ├── 📜 Projeto_Entrega_1_Calculo_2.docx # Documento Entrega 1 Cálculo DOCX
+│ │ └── 📜 Projeto_Entrega_1_Calculo_2.pdf # Documento Entrega 1 Cálculo PDF
+│ ├── 🔗 Index.html # Site com o Link do Gráfico
+│ ├── 📜 Main.js # Código JS do gráfico
+│ └── 📜 package.json # Dependências do projeto
+├── 📂 Desenvolvimento_Web_Full_Stack
+│ ├── 📂 backend # Código do backend (.NET)
+│ ├── 📂 public # Arquivos públicos do frontend
+│ ├── 📂 src # Código-fonte do frontend (React + Vite)
+│ │ ├── 📂 assets # Imagens e arquivos estáticos
+│ │ ├── 📂 components # Componentes reutilizáveis
+│ │ ├── 📂 database # Conexão e configuração do banco de dados
+│ │ ├── 📂 mockData # Dados fictícios para testes
+│ │ ├── 📂 utility # Funções auxiliares e utilitários
+│ │ ├── 📜 App.jsx # Componente raiz da aplicação
+│ │ ├── 📜 index.css # Estilos globais
+│ │ └── 📜 main.jsx # Arquivo principal do React
+│ ├── 📜 .env # Configurações de ambiente
+│ ├── 📜 package.json # Dependências do projeto
+│ ├── 📜 tailwind.config.js # Configuração do Tailwind CSS
+│ └── 📜 vite.config.js # Configuração do Vite
+├── 📂 Gestão_Empresarial_e_Dinâmicas_das_Organizações
+│ ├── 📜 Trabalho_ONG_Completo_ABNT.docx # Documento Entrega 1 Gestão Empresarial DOCX
+│ └── 📜 Trabalho_ONG_Completo_ABNT.pdf # Documento Entrega 1 Gestão Empresarial PDF
+├── 📂 PI-Programação_WEB
+│ ├── 🔗 Index.html # Site com o Link do Projeto do Figma
+│ ├── 📜 Projeto_PI_Template.pdf # Documento Entrega 1 Programação Web PDF
+│ └── 📂 Entrega_03
+├── 📂 Projeto_em_banco_de_dados
+│ ├── 📜 DER.PI.drawio.pdf # Documento Entrega 1 Projeto de Banco de Dados PDF
+│ └── 📜 DER.PI.drawio.png # Documento Entrega 1 Projeto de Banco de Dados PNG
+└── 📜 README.md # Documentação do projeto
 
 ---
 
