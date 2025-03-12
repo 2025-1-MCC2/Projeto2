@@ -83,6 +83,7 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 │ ├── 📜 DER.PI.drawio.pdf # Documento Entrega 1 Projeto de Banco de Dados PDF
 │ └── 📜 DER.PI.drawio.png # Documento Entrega 1 Projeto de Banco de Dados PNG
 └── 📜 README.md # Documentação do projeto
+``` 
 
 ---
 
