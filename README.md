@@ -1,3 +1,7 @@
+Aqui está a versão atualizada do seu README com links principais para cada matéria, redirecionando para a pasta de documentos referente a cada uma:
+
+---
+
 # 📊 Dashboard Interativo - Instituto Criativo
 
 <p align="center">
@@ -13,15 +17,12 @@
 - <a href="https://github.com/Marcos-Yogi">**Marcos Hiroshi**</a>
 - <a href="https://github.com/Vinishireis">**Vinícius Nishimura Reis**</a>
 
-### 🧑🏻‍🏫👩🏻‍🏫Professores Orientadores  
-
-## Professores Orientadores:  
+### 🧑🏻‍🏫👩🏻‍🏫 Professores Orientadores  
 - <a href="https://www.linkedin.com/in/cristina-machado-corr%C3%AAa-leite-630309160/">Cristina Machado Corrêa Leite</a> 
 - <a href="https://www.linkedin.com/in/dolemes/">David De Oliveira Lemes</a> 
 - <a href="https://www.linkedin.com/in/francisco-escobar/">Francisco de Souza Escobar</a> 
 - <a href="https://www.linkedin.com/in/katia-bossi/">Katia Milani Lara Bossi</a> 
 - <a href="https://www.linkedin.com/in/leonardo-fabris-lugoboni-a3369416/">Leonardo Fabris Lugoboni</a>
-
 
 ---
 
@@ -46,44 +47,53 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 - 🔧 **Outras Ferramentas:** ESLint, Prettier, PostCSS
 
 ---
+
 ## 📂 Estrutura do Projeto
+
+### Links para as Matérias:
+- [📂 **Cálculo II**](./Calculo_II/Documentos)  
+- [📂 **Desenvolvimento Web Full Stack**](./Desenvolvimento_Web_Full_Stack)  
+- [📂 **Gestão Empresarial e Dinâmicas das Organizações**](./Gestão_Empresarial_e_Dinâmicas_das_Organizações/Documentos)  
+- [📂 **PI-Programação WEB**](./PI-Programação_WEB/Documentos)  
+- [📂 **Projeto em Banco de Dados**](./Projeto_em_banco_de_dados/Documentos)  
+
 ```
 📦 Projeto
 ├── 📂 Calculo_II
-│ ├── 📂 Documentos
-│ │ ├── 📜 Projeto_Entrega_1_Calculo_2.docx # Documento Entrega 1 Cálculo DOCX
-│ │ └── 📜 Projeto_Entrega_1_Calculo_2.pdf # Documento Entrega 1 Cálculo PDF
-│ ├── 🔗 Index.html # Site com o Link do Gráfico
-│ ├── 📜 Main.js # Código JS do gráfico
-│ └── 📜 package.json # Dependências do projeto
+│   ├── 📂 Documentos
+│   │   ├── 📜 Projeto_Entrega_1_Calculo_2.docx   # Documento Entrega 1 Cálculo DOCX
+│   │   └── 📜 Projeto_Entrega_1_Calculo_2.pdf    # Documento Entrega 1 Cálculo PDF
+│   ├── 🔗 Index.html       # Site com o Link do Gráfico
+│   ├── 📜 Main.js          # Código JS do gráfico
+│   └── 📜 package.json     # Dependências do projeto
 ├── 📂 Desenvolvimento_Web_Full_Stack
-│ ├── 📂 backend # Código do backend (.NET)
-│ ├── 📂 public # Arquivos públicos do frontend
-│ ├── 📂 src # Código-fonte do frontend (React + Vite)
-│ │ ├── 📂 assets # Imagens e arquivos estáticos
-│ │ ├── 📂 components # Componentes reutilizáveis
-│ │ ├── 📂 database # Conexão e configuração do banco de dados
-│ │ ├── 📂 mockData # Dados fictícios para testes
-│ │ ├── 📂 utility # Funções auxiliares e utilitários
-│ │ ├── 📜 App.jsx # Componente raiz da aplicação
-│ │ ├── 📜 index.css # Estilos globais
-│ │ └── 📜 main.jsx # Arquivo principal do React
-│ ├── 📜 .env # Configurações de ambiente
-│ ├── 📜 package.json # Dependências do projeto
-│ ├── 📜 tailwind.config.js # Configuração do Tailwind CSS
-│ └── 📜 vite.config.js # Configuração do Vite
+│   ├── 📂 backend          # Código do backend (.NET)
+│   ├── 📂 public           # Arquivos públicos do frontend
+│   ├── 📂 src              # Código-fonte do frontend (React + Vite)
+│   │   ├── 📂 assets       # Imagens e arquivos estáticos
+│   │   ├── 📂 components   # Componentes reutilizáveis
+│   │   ├── 📂 database     # Conexão e configuração do banco de dados
+│   │   ├── 📂 mockData     # Dados fictícios para testes
+│   │   ├── 📂 utility      # Funções auxiliares e utilitários
+│   │   ├── 📜 App.jsx      # Componente raiz da aplicação
+│   │   ├── 📜 index.css    # Estilos globais
+│   │   └── 📜 main.jsx     # Arquivo principal do React
+│   ├── 📜 .env             # Configurações de ambiente
+│   ├── 📜 package.json     # Dependências do projeto
+│   ├── 📜 tailwind.config.js # Configuração do Tailwind CSS
+│   └── 📜 vite.config.js   # Configuração do Vite
 ├── 📂 Gestão_Empresarial_e_Dinâmicas_das_Organizações
-│ ├── 📜 Trabalho_ONG_Completo_ABNT.docx # Documento Entrega 1 Gestão Empresarial DOCX
-│ └── 📜 Trabalho_ONG_Completo_ABNT.pdf # Documento Entrega 1 Gestão Empresarial PDF
+│   ├── 📜 Trabalho_ONG_Completo_ABNT.docx   # Documento Entrega 1 Gestão Empresarial DOCX
+│   └── 📜 Trabalho_ONG_Completo_ABNT.pdf    # Documento Entrega 1 Gestão Empresarial PDF
 ├── 📂 PI-Programação_WEB
-│ ├── 🔗 Index.html # Site com o Link do Projeto do Figma
-│ ├── 📜 Projeto_PI_Template.pdf # Documento Entrega 1 Programação Web PDF
-│ └── 📂 Entrega_03
+│   ├── 🔗 Index.html       # Site com o Link do Projeto do Figma
+│   ├── 📜 Projeto_PI_Template.pdf  # Documento Entrega 1 Programação Web PDF
+│   └── 📂 Entrega_03
 ├── 📂 Projeto_em_banco_de_dados
-│ ├── 📜 DER.PI.drawio.pdf # Documento Entrega 1 Projeto de Banco de Dados PDF
-│ └── 📜 DER.PI.drawio.png # Documento Entrega 1 Projeto de Banco de Dados PNG
-└── 📜 README.md # Documentação do projeto
-``` 
+│   ├── 📜 DER.PI.drawio.pdf     # Documento Entrega 1 Projeto de Banco de Dados PDF
+│   └── 📜 DER.PI.drawio.png     # Documento Entrega 1 Projeto de Banco de Dados PNG
+└── 📜 README.md        # Documentação do projeto
+```
 
 ---
 
@@ -129,10 +139,12 @@ Este projeto está sob a licença CC - "Creative Commons". Consulte o arquivo `L
 ## 📌 Contato
 
 Caso tenha dúvidas ou sugestões, entre em contato com a equipe de desenvolvimento. 🚀
-```
+
+---
 
 ### O que foi atualizado:
-✅ Adaptação para o **Dashboard Interativo**  
-✅ Estrutura do projeto ajustada conforme sua organização de pastas  
-✅ Removidas informações genéricas ou não relevantes  
-✅ Melhor formatação para facilitar a leitura  
+✅ Adicionados **links principais** para cada matéria, redirecionando para a pasta de documentos correspondente.  
+✅ Estrutura do projeto ajustada e organizada.  
+✅ Melhor formatação para facilitar a leitura e navegação.  
+
+Se precisar de mais ajustes, é só avisar! 😊
