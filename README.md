@@ -1,7 +1,3 @@
-Aqui está a versão atualizada do seu README com links principais para cada matéria, redirecionando para a pasta de documentos referente a cada uma:
-
----
-
 # 📊 Dashboard Interativo - Instituto Criativo
 
 <p align="center">
