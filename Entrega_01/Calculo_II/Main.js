@@ -1,260 +1,141 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
-var lenght_X = new Number(6);//
-var lenght_Y = new Number(50);// lenght of axis must be fucking proportional to the goddaam camera position
-var lenght_Z = new Number(6);//
+// Configurações iniciais
+var length_X = 6; // Comprimento do eixo X
+var length_Y = 50; // Comprimento do eixo Y
+var length_Z = 6; // Comprimento do eixo Z
 
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xb0b0b0); // Cinza médio, menos claro
 
-let H = Number();
+// Configuração do renderizador
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-const renderer = new THREE.WebGLRenderer();
+// Configuração da câmera
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+camera.position.set(20, 20, 20); // Posição inicial da câmera
+camera.lookAt(0, 0, 0);
 
-renderer.setSize( window.innerWidth, window.innerHeight );
+// Controles de órbita
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Suaviza o movimento da câmera
+controls.dampingFactor = 0.05; // Fator de amortecimento
+controls.minDistance = 10; // Distância mínima de zoom
+controls.maxDistance = 80; // Distância máxima de zoom
+controls.maxPolarAngle = Math.PI / 2; // Limita o ângulo de rotação vertical
 
-document.body.appendChild( renderer.domElement );
+// Iluminação
+const light = new THREE.PointLight({ color: 'white' });
+light.position.set(10, 10, 10);
+scene.add(light);
 
-const light = new THREE.PointLight({color: 'white'});
+// Adicionando eixos X, Y e Z
+const axesHelper = new THREE.AxesHelper(5); // Tamanho dos eixos
+scene.add(axesHelper);
 
-const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-camera.position.set(10,10,10);
-camera.lookAt(0,0,0);
-const controls = new OrbitControls( camera, renderer.domElement );
-//#region Line_Points
-const Line_X_points = [];
-Line_X_points.push( new THREE.Vector3( lenght_X, 0, 0 ) );
-Line_X_points.push( new THREE.Vector3( -lenght_X, 0, 0 ) );
-
-const Line_Y_points = [];
-Line_Y_points.push( new THREE.Vector3( 0, lenght_Y, 0 ) );
-Line_Y_points.push( new THREE.Vector3( 0, -lenght_Y, 0 ) );
-
-const Line_Z_points = [];
-Line_Z_points.push( new THREE.Vector3( 0, 0, lenght_Z ) );
-Line_Z_points.push( new THREE.Vector3( 0, 0, -lenght_Z ) );
-//#endregion 
-
-//#region Line_Apply
-const Line_X_Geometry = new THREE.BufferGeometry().setFromPoints( Line_X_points );
-const Line_X_Material = new THREE.LineBasicMaterial( {color: 'red' } );
-const Line_X_Line = new THREE.Line( Line_X_Geometry, Line_X_Material );
-
-const Line_Y_Geometry = new THREE.BufferGeometry().setFromPoints( Line_Y_points );
-const Line_Y_Material = new THREE.LineBasicMaterial( {color: 'green' } );
-const Line_Y_Line = new THREE.Line( Line_Y_Geometry, Line_Y_Material );
-
-const Line_Z_Geometry = new THREE.BufferGeometry().setFromPoints( Line_Z_points );
-const Line_Z_Material = new THREE.LineBasicMaterial( {color: 'blue' } );
-const Line_Z_Line = new THREE.Line( Line_Z_Geometry, Line_Z_Material );
-//#endregion
-
-//#region Scene_Add
-scene.add( Line_X_Line );
-scene.add( Line_Y_Line );
-scene.add( Line_Z_Line );
-
-scene.add( light );
-
-//#endregion
-
-//#region Indent_Line_Marks
-for(var X = 1; X < lenght_X; X++){
-
-    const Indent_Line_X_Points_Up = [];
-    Indent_Line_X_Points_Up.push( new THREE.Vector3(X,0.25,0));
-    Indent_Line_X_Points_Up.push( new THREE.Vector3(X,-0.25,0));
-
-    const Indent_Line_X_Points_Down = [];
-    Indent_Line_X_Points_Down.push( new THREE.Vector3(-X,0.25,0));
-    Indent_Line_X_Points_Down.push( new THREE.Vector3(-X,-0.25,0));
-
-    const Indent_Line_X_Points_Right = [];
-    Indent_Line_X_Points_Right.push( new THREE.Vector3(X,0,0.25));
-    Indent_Line_X_Points_Right.push( new THREE.Vector3(X,0,-0.25));
-
-    const Indent_Line_X_Points_Left = [];
-    Indent_Line_X_Points_Left.push( new THREE.Vector3(-X,0, 0.25));
-    Indent_Line_X_Points_Left.push( new THREE.Vector3(-X,0,-0.25));
-
-    const Indent_Line_X_Geometry_Up = new THREE.BufferGeometry().setFromPoints( Indent_Line_X_Points_Up );
-    const Indent_Line_X_Material_Up = new THREE.LineBasicMaterial( {color: 'red' } );
-    const Indent_Line_X_Line_Up = new THREE.Line( Indent_Line_X_Geometry_Up, Indent_Line_X_Material_Up );
-
-    const Indent_Line_X_Geometry_Down = new THREE.BufferGeometry().setFromPoints( Indent_Line_X_Points_Down);
-    const Indent_Line_X_Material_Down = new THREE.LineBasicMaterial( {color: 'red' } );
-    const Indent_Line_X_Line_Down = new THREE.Line( Indent_Line_X_Geometry_Down, Indent_Line_X_Material_Down );
-
-    const Indent_Line_X_Geometry_Right = new THREE.BufferGeometry().setFromPoints( Indent_Line_X_Points_Right );
-    const Indent_Line_X_Material_Right = new THREE.LineBasicMaterial( {color: 'red' } );
-    const Indent_Line_X_Line_Right = new THREE.Line( Indent_Line_X_Geometry_Right, Indent_Line_X_Material_Right );
-
-    const Indent_Line_X_Geometry_Left = new THREE.BufferGeometry().setFromPoints( Indent_Line_X_Points_Left);
-    const Indent_Line_X_Material_Left = new THREE.LineBasicMaterial( {color: 'red' } );
-    const Indent_Line_X_Line_Left = new THREE.Line( Indent_Line_X_Geometry_Left, Indent_Line_X_Material_Left );
-    scene.add( Indent_Line_X_Line_Up );
-    scene.add( Indent_Line_X_Line_Down );
-    scene.add( Indent_Line_X_Line_Right );
-    scene.add( Indent_Line_X_Line_Left );
-}
-for(var Y = 1; Y < lenght_Y; Y++){
-
-    const Indent_Line_Y_Points_Up = [];
-    Indent_Line_Y_Points_Up.push( new THREE.Vector3(0.25,Y,0));
-    Indent_Line_Y_Points_Up.push( new THREE.Vector3(-0.25,Y,0));
-
-    const Indent_Line_Y_Points_Down = [];
-    Indent_Line_Y_Points_Down.push( new THREE.Vector3(0.25,-Y,0));
-    Indent_Line_Y_Points_Down.push( new THREE.Vector3(-0.25,-Y,0));
-
-    const Indent_Line_Y_Points_Right = [];
-    Indent_Line_Y_Points_Right.push( new THREE.Vector3(0,Y,0.25));
-    Indent_Line_Y_Points_Right.push( new THREE.Vector3(0,Y,-0.25));
-
-    const Indent_Line_Y_Points_Left = [];
-    Indent_Line_Y_Points_Left.push( new THREE.Vector3(0,-Y, 0.25));
-    Indent_Line_Y_Points_Left.push( new THREE.Vector3(0,-Y,-0.25));
-
-    const Indent_Line_Y_Geometry_Up = new THREE.BufferGeometry().setFromPoints( Indent_Line_Y_Points_Up );
-    const Indent_Line_Y_Material_Up = new THREE.LineBasicMaterial( {color: 'green' } );
-    const Indent_Line_Y_Line_Up = new THREE.Line( Indent_Line_Y_Geometry_Up, Indent_Line_Y_Material_Up );
-
-    const Indent_Line_Y_Geometry_Down = new THREE.BufferGeometry().setFromPoints( Indent_Line_Y_Points_Down);
-    const Indent_Line_Y_Material_Down = new THREE.LineBasicMaterial( {color: 'green' } );
-    const Indent_Line_Y_Line_Down = new THREE.Line( Indent_Line_Y_Geometry_Down, Indent_Line_Y_Material_Down );
-
-    const Indent_Line_Y_Geometry_Right = new THREE.BufferGeometry().setFromPoints( Indent_Line_Y_Points_Right );
-    const Indent_Line_Y_Material_Right = new THREE.LineBasicMaterial( {color: 'green' } );
-    const Indent_Line_Y_Line_Right = new THREE.Line( Indent_Line_Y_Geometry_Right, Indent_Line_Y_Material_Right );
-
-    const Indent_Line_Y_Geometry_Left = new THREE.BufferGeometry().setFromPoints( Indent_Line_Y_Points_Left);
-    const Indent_Line_Y_Material_Left = new THREE.LineBasicMaterial( {color: 'green' } );
-    const Indent_Line_Y_Line_Left = new THREE.Line( Indent_Line_Y_Geometry_Left, Indent_Line_Y_Material_Left );
-    scene.add( Indent_Line_Y_Line_Up );
-    scene.add( Indent_Line_Y_Line_Down );
-    scene.add( Indent_Line_Y_Line_Right );
-    scene.add( Indent_Line_Y_Line_Left );
-}
-for(var Z = 1; Z < lenght_Z; Z++){
-
-    const Indent_Line_Z_Points_Up = [];
-    Indent_Line_Z_Points_Up.push( new THREE.Vector3(0,0.25,Z));
-    Indent_Line_Z_Points_Up.push( new THREE.Vector3(0,-0.25,Z));
-
-    const Indent_Line_Z_Points_Down = [];
-    Indent_Line_Z_Points_Down.push( new THREE.Vector3(0,0.25,-Z));
-    Indent_Line_Z_Points_Down.push( new THREE.Vector3(0,-0.25,-Z));
-
-    const Indent_Line_Z_Points_Right = [];
-    Indent_Line_Z_Points_Right.push( new THREE.Vector3(0.25,0, Z));
-    Indent_Line_Z_Points_Right.push( new THREE.Vector3(-0.25,0,Z));
-
-    const Indent_Line_Z_Points_Left = [];
-    Indent_Line_Z_Points_Left.push( new THREE.Vector3(0.25,0,-Z));
-    Indent_Line_Z_Points_Left.push( new THREE.Vector3(-0.25,0,-Z));
-
-    const Indent_Line_Z_Geometry_Up = new THREE.BufferGeometry().setFromPoints( Indent_Line_Z_Points_Up );
-    const Indent_Line_Z_Material_Up = new THREE.LineBasicMaterial( {color: 'blue' } );
-    const Indent_Line_Z_Line_Up = new THREE.Line( Indent_Line_Z_Geometry_Up, Indent_Line_Z_Material_Up );
-
-    const Indent_Line_Z_Geometry_Down = new THREE.BufferGeometry().setFromPoints( Indent_Line_Z_Points_Down);
-    const Indent_Line_Z_Material_Down = new THREE.LineBasicMaterial( {color: 'blue' } );
-    const Indent_Line_Z_Line_Down = new THREE.Line( Indent_Line_Z_Geometry_Down, Indent_Line_Z_Material_Down );
-
-    const Indent_Line_Z_Geometry_Right = new THREE.BufferGeometry().setFromPoints( Indent_Line_Z_Points_Right );
-    const Indent_Line_Z_Material_Right = new THREE.LineBasicMaterial( {color: 'blue' } );
-    const Indent_Line_Z_Line_Right = new THREE.Line( Indent_Line_Z_Geometry_Right, Indent_Line_Z_Material_Right );
-
-    const Indent_Line_Z_Geometry_Left = new THREE.BufferGeometry().setFromPoints( Indent_Line_Z_Points_Left);
-    const Indent_Line_Z_Material_Left = new THREE.LineBasicMaterial( {color: 'blue' } );
-    const Indent_Line_Z_Line_Left = new THREE.Line( Indent_Line_Z_Geometry_Left, Indent_Line_Z_Material_Left );
-    scene.add( Indent_Line_Z_Line_Up );
-    scene.add( Indent_Line_Z_Line_Down );
-    scene.add( Indent_Line_Z_Line_Right );
-    scene.add( Indent_Line_Z_Line_Left );
+// Função para criar linhas de marcação nos eixos
+function createAxisMarks(length, color, axis) {
+    const marks = [];
+    for (let i = 1; i < length; i++) {
+        const points = [];
+        if (axis === 'x') {
+            points.push(new THREE.Vector3(i, 0.25, 0));
+            points.push(new THREE.Vector3(i, -0.25, 0));
+        } else if (axis === 'y') {
+            points.push(new THREE.Vector3(0.25, i, 0));
+            points.push(new THREE.Vector3(-0.25, i, 0));
+        } else if (axis === 'z') {
+            points.push(new THREE.Vector3(0, 0.25, i));
+            points.push(new THREE.Vector3(0, -0.25, i));
+        }
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({ color });
+        const line = new THREE.Line(geometry, material);
+        scene.add(line);
+    }
 }
 
-//#endregion
+// Função para adicionar números nas marcações dos eixos (2D)
+function addAxisLabels(length, axis) {
+    const loader = new FontLoader();
+    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+        for (let i = 1; i < length; i++) {
+            const textGeometry = new TextGeometry(i.toString(), {
+                font: font,
+                size: 0.3, // Tamanho menor para evitar sobreposição
+                height: 0, // Altura zero para texto 2D
+            });
+            const textMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
+            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 
+            // Posicionamento dos números (2D)
+            if (axis === 'x') {
+                textMesh.position.set(i, -0.5, 0); // Abaixo do eixo X
+                textMesh.rotation.set(0, 0, 0); // Sem rotação
+            } else if (axis === 'y') {
+                textMesh.position.set(-0.5, i, 0); // À esquerda do eixo Y
+                textMesh.rotation.set(0, 0, 0); // Sem rotação
+            } else if (axis === 'z') {
+                textMesh.position.set(0, -0.5, i); // Abaixo do eixo Z
+                textMesh.rotation.set(0, 0, 0); // Sem rotação
+            }
+
+            scene.add(textMesh);
+        }
+    });
+}
+
+// Criando marcas nos eixos
+createAxisMarks(length_X, 'red', 'x');
+createAxisMarks(length_Y, 'green', 'y');
+createAxisMarks(length_Z, 'blue', 'z');
+
+
+
+// Função principal
 function Function(H) {
     return (Math.pow(H, 3) / 3) - (3 * Math.pow(H, 2)) + (5 * H) + 20;
 }
 
-
-
-
-for(H = 0; H <= 6; H += 0.01){
-
-    
+// Plotando a função
+for (let H = 0; H <= 6; H += 0.01) {
     const Function_Points = [];
-    Function_Points.push( new THREE.Vector3(H, Function(H), 0) );
-    Function_Points.push( new THREE.Vector3(H + 0.01, Function(H + 0.01), 0) );
+    Function_Points.push(new THREE.Vector3(H, Function(H), 0));
+    Function_Points.push(new THREE.Vector3(H + 0.01, Function(H + 0.01), 0));
 
-    const Function_Line = new THREE.BufferGeometry().setFromPoints( Function_Points );
-    const Function_Line_Material = new THREE.LineBasicMaterial( {color: 'Yellow' } );
-    const Function_Line_Line = new THREE.Line( Function_Line, Function_Line_Material ); 
-    scene.add( Function_Line_Line );
-    H += 0.01;
-}
-//infelizmente não tenho forças para criar uma calculadora de derivadas, então vou ter que usar a função que a professora passou
-//#region AAAAAAAAAAAAAAAAAA 
- 
- 
- 
-function f(M) {
-    return (Math.pow(M, 3) / 3) - (3 * Math.pow(M, 2)) + (5 * M) + 20; // EMemplo: f(M) = (M^3 / 3) - 3M^2 + 5M + 20
+    const Function_Line = new THREE.BufferGeometry().setFromPoints(Function_Points);
+    const Function_Line_Material = new THREE.LineBasicMaterial({ color: 'yellow', linewidth: 2 });
+    const Function_Line_Line = new THREE.Line(Function_Line, Function_Line_Material);
+    scene.add(Function_Line_Line);
 }
 
-// Derivada primeira de f(M)
-function f_prime(M) {
-    return M * M - 6 * M + 5; // Derivada de f(M)
+// Adicionando legenda
+const legend = document.createElement('div');
+legend.style.position = 'absolute';
+legend.style.top = '10px';
+legend.style.left = '10px';
+legend.style.color = 'black'; // Cor do texto para contraste com o fundo claro
+legend.style.backgroundColor = 'rgba(255, 255, 255, 0.8)'; // Fundo semi-transparente
+legend.style.padding = '10px';
+legend.style.borderRadius = '5px';
+legend.innerHTML = `
+    <strong>Legenda:</strong><br>
+    <span style="color: red;">● Eixo X</span><br>
+    <span style="color: green;">● Eixo Y</span><br>
+    <span style="color: blue;">● Eixo Z</span><br>
+    <span style="color: yellow;">● Função f(x)</span>
+`;
+document.body.appendChild(legend);
+
+// Função de animação
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // Atualiza os controles de órbita
+    renderer.render(scene, camera);
 }
-
-// Derivada segunda de f(M)
-function f_double_prime(M) {
-    return 2 * M - 6; // Derivada segunda de f(M)
-}
-
-// Derivada terceira de f(M)
-function f_triple_prime(M) {
-    return 2; // Derivada terceira de f(M)
-}
-
-
-function taylorThingy(M, a) {
-    const f_a = f(a);
-    const f_prime_a = f_prime(a);
-    const f_double_prime_a = f_double_prime(a);
-    const f_triple_prime_a = f_triple_prime(a);
-
-    // Polinômio de Taylor de terceiro grau
-    return f_a 
-           + f_prime_a * (M - a) 
-           + (f_double_prime_a / 2) * Math.pow(M - a, 2)
-           + (f_triple_prime_a / 6) * Math.pow(M - a, 3);
-}
-
-//#endregion
-
-let a = 0; 
-let M = 3.1; 
-
-let resultado = taylorThingy(M, a);
-let resultado2 = Function(3.1);
-console.log("Aproximação:" + resultado);
-console.log("Realidade:" +resultado2);
-console.log("Erro:" + (resultado2 - resultado));
-console.log("Conclusão: Ao implementar o Polinômio de Taylor no código temos a possibilidade de analisar funções mais complexas. Porém, no caso apresentado ondetemos uma função simples, o passo adicional de calcular o polinômio não gera retorno o suficiente para justificar sua implementaçã complexa");
-function Animate(){
-  renderer.render( scene, camera );  
-  controls.update();
-  requestAnimationFrame(Animate);
-}
-Animate();
-
-
-
-
-
-
-//Ao implementar o Polinômio de Taylor no código temos a possibilidade de analisar funções mais complexas. Porém, no caso apresentado ondetemos uma função simples, o passo adicional de calcular o polinômio não gera retorno o suficiente para justificar sua implementaçã complexa;
+animate();
