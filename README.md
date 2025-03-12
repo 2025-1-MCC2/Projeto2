@@ -51,11 +51,11 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 ## 📂 Estrutura do Projeto
 
 ### Links para as Matérias:
-- [📂 **Cálculo II**](./Calculo_II/Documentos)  
-- [📂 **Desenvolvimento Web Full Stack**](./Desenvolvimento_Web_Full_Stack)  
-- [📂 **Gestão Empresarial e Dinâmicas das Organizações**](./Gestão_Empresarial_e_Dinâmicas_das_Organizações/Documentos)  
-- [📂 **PI-Programação WEB**](./PI-Programação_WEB/Documentos)  
-- [📂 **Projeto em Banco de Dados**](./Projeto_em_banco_de_dados/Documentos)  
+- [📂 **Cálculo II**](Entrega_01/Calculo_II/Documentos)  
+- [📂 **Desenvolvimento Web Full Stack**](Entrega_01/Desenvolvimento_Web_Full_Stack)  
+- [📂 **Gestão Empresarial e Dinâmicas das Organizações**](Entrega_01/Gestão_Empresarial_e_Dinâmicas_das_Organizações/Documentos)  
+- [📂 **PI-Programação WEB**](/Entrega_01/PI-Programação_WEB/Documentos/)  
+- [📂 **Projeto em Banco de Dados**](Entrega_01/Projeto_em_banco_de_dados/Documentos)  
 
 ```
 📦 Projeto
