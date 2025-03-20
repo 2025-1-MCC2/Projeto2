@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Configuração do CORS para permitir o frontend na Vercel
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "http://localhost:5173"); // Permitir frontend da Vercel
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "https://instituto-criativo.vercel.app/"); // Permitir frontend da Vercel
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") {
