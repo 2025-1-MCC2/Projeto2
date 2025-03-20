@@ -12,8 +12,10 @@ const rateLimit = require("express-rate-limit");
 
 const app = express();
 app.use(express.json());
+
+// Configuração do CORS para permitir o frontend na Vercel
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "http://localhost:5173"); // Permitir frontend da Vercel
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") {
@@ -27,17 +29,17 @@ app.use(helmet());
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 100,
-  message: "Muitas requisições. Tente novamente mais tarde."
+  message: "Muitas requisições. Tente novamente mais tarde.",
 });
 app.use(limiter);
 
-// Configuração do banco de dados
+// Configuração do banco de dados com as credenciais do InfinityFree
 const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS || "", // Se não tiver senha, usa string vazia
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306, // Define a porta
+  host: process.env.DB_HOST || "sql210.infinityfree.com",
+  user: process.env.DB_USER || "if0_38563742",
+  password: process.env.DB_PASS || "Vinishireis2005",
+  database: process.env.DB_NAME || "if0_38563742_auth_system",
+  port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
 });
@@ -94,7 +96,7 @@ app.post("/login", async (req, res) => {
     // Gere o token JWT
     const token = jwt.sign(
       { id: user.id, nome: user.nome, tipo: user.tipo }, // Inclua o tipo de usuário
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || "591e0a859f2c1b10a04d04a29cbb0f474b25f8743ae5277d6ae70d2e6d9bc596",
       { expiresIn: "1h" } // Defina um tempo de expiração
     );
 
@@ -103,7 +105,7 @@ app.post("/login", async (req, res) => {
       message: "Login bem-sucedido",
       nome: user.nome,
       tipo: user.tipo,
-      token // Retorna o token para o frontend
+      token, // Retorna o token para o frontend
     });
   } catch (error) {
     console.error("Erro no login:", error);
@@ -147,7 +149,7 @@ app.post("/esqueci-senha", async (req, res) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Redefinição de Senha",
-      html: `<p>Clique no link para redefinir sua senha: <a href="${resetLink}">${resetLink}</a></p>`
+      html: `<p>Clique no link para redefinir sua senha: <a href="${resetLink}">${resetLink}</a></p>`,
     });
     res.status(200).json({ message: "E-mail de redefinição enviado!" });
   } catch (error) {
@@ -160,7 +162,7 @@ app.get("/rota-restrita", verifyToken(["desenvolvedor"]), (req, res) => {
   res.status(200).json({ message: `Bem-vindo, ${req.user.nome}!` });
 });
 
-
+// Middleware de erro
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Erro interno do servidor." });
@@ -169,76 +171,3 @@ app.use((err, req, res, next) => {
 // Iniciar o servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setErro("");
-
-  // Validações no frontend
-  if (!isLogin && senha !== confirmarSenha) {
-    setErro("As senhas não coincidem!");
-    return;
-  }
-
-  if (!validarEmail(email)) {
-    setErro("E-mail inválido.");
-    return;
-  }
-
-  if (!validarSenha(senha)) {
-    setErro("A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.");
-    return;
-  }
-
-  if (!isLogin && !validarNome(nome)) {
-    setErro("O nome não pode conter números ou caracteres especiais.");
-    return;
-  }
-
-  // Sanitização dos dados
-  const sanitizedNome = validator.escape(nome);
-  const sanitizedEmail = validator.normalizeEmail(email);
-  const sanitizedSenha = validator.escape(senha);
-
-  const url = isLogin ? "http://localhost:5000/login" : "http://localhost:5000/signup";
-  const data = isLogin
-    ? { email: sanitizedEmail, senha: sanitizedSenha }
-    : { nome: sanitizedNome, email: sanitizedEmail, senha: sanitizedSenha, tipo };
-
-  try {
-    const response = await axios.post(url, data);
-    console.log("Resposta do servidor:", response.data);
-
-    if (isLogin) {
-      alert("Login bem-sucedido!");
-      // Armazena o nome do usuário e o token no localStorage
-      localStorage.setItem("userName", response.data.nome);
-      localStorage.setItem("userType", response.data.tipo);
-      localStorage.setItem("token", response.data.token); // Armazena o token
-      console.log("Nome armazenado:", response.data.nome);
-      console.log("Tipo de usuário:", response.data.tipo);
-      console.log("Token armazenado:", response.data.token);
-
-      // Redireciona para a tela de início
-      navigate("/");
-    } else {
-      alert("Cadastro bem-sucedido!");
-      // Armazena o nome do usuário no localStorage após o cadastro
-      localStorage.setItem("userName", sanitizedNome);
-      console.log("Nome armazenado:", sanitizedNome);
-      setIsLogin(true); // Alternar para a tela de login
-    }
-  } catch (error) {
-    console.error("Erro:", error.response?.data || error.message);
-    setErro(error.response?.data?.message || "Ocorreu um erro. Tente novamente.");
-
-    if (isLogin) {
-      setTentativasLogin(tentativasLogin + 1);
-      if (tentativasLogin >= 3) {
-        setErro("Muitas tentativas de login. Tente novamente mais tarde.");
-        return;
-      }
-    }
-  }
-};
