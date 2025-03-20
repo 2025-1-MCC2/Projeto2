@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { SlideRight, SlideLeft } from "../../utility/animation";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -16,8 +17,23 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Mensagem enviada com sucesso!");
-    setFormData({ nome: "", email: "", mensagem: "" });
+
+    // Configurações do EmailJS
+    const serviceID = 'service_d2x6ak5';
+    const templateID = 'template_ovorxtd';
+    const userID = '-XVHrm05L0c_nPLHI'; // Sua Public Key do EmailJS
+
+    // Envia o email usando EmailJS
+    emailjs.send(serviceID, templateID, formData, userID)
+      .then((response) => {
+        console.log('Email enviado com sucesso!', response.status, response.text);
+        alert("Mensagem enviada com sucesso!");
+        setFormData({ nome: "", email: "", mensagem: "" });
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar o email:', error);
+        alert("Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.");
+      });
   };
 
   return (
