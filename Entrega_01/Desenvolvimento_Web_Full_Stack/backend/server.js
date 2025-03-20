@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Configuração do CORS para permitir o frontend na Vercel
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "https://instituto-criativo.vercel.app/"); // Permitir frontend da Vercel
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "https://instituto-criativo.vercel.app"); // Sem barra no final
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") {
@@ -42,6 +42,16 @@ const db = mysql.createPool({
   port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
+});
+
+// Verificar conexão com o banco de dados
+db.getConnection((err, connection) => {
+  if (err) {
+    console.error("Erro ao conectar ao banco de dados:", err);
+  } else {
+    console.log("Conectado ao banco de dados MySQL!");
+    connection.release();
+  }
 });
 
 // Configuração do nodemailer
@@ -164,8 +174,8 @@ app.get("/rota-restrita", verifyToken(["desenvolvedor"]), (req, res) => {
 
 // Middleware de erro
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Erro interno do servidor." });
+  console.error("Erro:", err.stack);
+  res.status(500).json({ message: "Erro interno do servidor.", error: err.message });
 });
 
 // Iniciar o servidor
