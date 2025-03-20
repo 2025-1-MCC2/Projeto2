@@ -58,8 +58,8 @@ db.getConnection((err, connection) => {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.EMAIL_USER || "institutocriativopi@gmail.com",
+    pass: process.env.EMAIL_PASS || "@Institutocriativo2025"
   },
 });
 
