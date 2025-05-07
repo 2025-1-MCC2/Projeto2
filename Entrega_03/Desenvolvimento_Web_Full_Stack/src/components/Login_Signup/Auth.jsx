@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { SlideRight } from "../../utility/animation";
 import validator from "validator";
 import { supabase } from "../../../lib/supabaseClient";
+import { useAuth } from "../../../hooks/useAuth";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
