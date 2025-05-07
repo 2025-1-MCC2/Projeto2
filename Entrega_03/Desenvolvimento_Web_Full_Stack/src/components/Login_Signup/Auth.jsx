@@ -368,7 +368,7 @@ const Auth = () => {
       <p>
         Esqueceu a senha?{' '}
         <a 
-          href="/forgotpassword" 
+          href="/forgot-password" 
           className="text-yellow-600 font-medium hover:underline"
         >
           Redefinir senha
