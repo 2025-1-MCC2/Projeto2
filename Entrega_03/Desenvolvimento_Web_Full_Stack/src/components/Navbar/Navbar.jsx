@@ -13,11 +13,44 @@ const Navbar = () => {
 
   // Verifica e monitora o estado de autenticação
   useEffect(() => {
+    const fetchUserProfile = async (user) => {
+      try {
+        // 1. Primeiro tenta pegar da tabela profiles
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+        // 2. Se não encontrar, verifica os user_metadata
+        let displayName = "";
+        
+        if (!profileError && profile?.full_name) {
+          displayName = profile.full_name;
+        } else if (user.user_metadata?.full_name) {
+          displayName = user.user_metadata.full_name;
+        } else if (user.user_metadata?.name) {
+          displayName = user.user_metadata.name;
+        } else if (user.identities?.[0]?.identity_data?.full_name) {
+          displayName = user.identities[0].identity_data.full_name;
+        } else {
+          // Último recurso: pega a parte antes do @ no email
+          displayName = user.email.split('@')[0];
+        }
+
+        // 3. Extrai apenas o primeiro nome e capitaliza
+        const first = displayName.split(" ")[0];
+        setFirstName(first ? first.charAt(0).toUpperCase() + first.slice(1) : "Usuário");
+
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+        setFirstName(user?.email?.split('@')[0] || "Usuário");
+      }
+    };
+
     const checkAuthState = async () => {
       try {
-        // 1. Verifica a sessão atual
         const { data: { session } } = await supabase.auth.getSession();
-        
         if (session?.user) {
           await fetchUserProfile(session.user);
         }
@@ -26,42 +59,8 @@ const Navbar = () => {
       }
     };
 
-    const fetchUserProfile = async (user) => {
-      try {
-        // 1. Tenta pegar da tabela profiles
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('full_name, email')
-          .eq('id', user.id)
-          .single();
-    
-        if (profileError && profileError.code !== 'PGRST116') throw profileError;
-    
-        // 2. Define o nome com fallbacks inteligentes
-        let displayName = "";
-        
-        if (profile?.full_name) {
-          displayName = profile.full_name;
-        } else if (user.user_metadata?.full_name) {
-          displayName = user.user_metadata.full_name;
-        } else {
-          // Fallback: pega a parte antes do @ no email
-          displayName = user.email.split('@')[0];
-        }
-    
-        // 3. Extrai apenas o primeiro nome
-        const first = displayName.split(" ")[0];
-        setFirstName(first || "Usuário"); // Fallback final
-    
-      } catch (error) {
-        console.error("Erro ao buscar perfil:", error);
-        setFirstName(user?.email?.split('@')[0] || "Usuário");
-      }
-    };
-
     checkAuthState();
 
-    // Configura listener para mudanças de autenticação
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {

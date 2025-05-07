@@ -9,48 +9,53 @@ const ResponsiveMenu = ({ isOpen }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserProfile = async (user) => {
       try {
-        // 1. Verifica a sessão atual
-        const { data: { session } } = await supabase.auth.getSession();
+        // 1. Prioriza a tabela profiles
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+        // 2. Hierarquia de fallbacks
+        let displayName = "";
         
-        if (session?.user) {
-          // 2. Busca o nome completo do usuário
-          let fullName = "";
-          
-          // Tenta pegar do perfil na tabela profiles
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('full_name')
-            .eq('id', session.user.id)
-            .single();
-          
-          // Se não encontrar no perfil, pega dos metadados de autenticação
-          if (profile?.full_name) {
-            fullName = profile.full_name;
-          } else if (session.user.user_metadata?.full_name) {
-            fullName = session.user.user_metadata.full_name;
-          } else {
-            fullName = session.user.email; // Fallback para email se não tiver nome
-          }
-          
-          // 3. Extrai apenas o primeiro nome
-          const first = fullName.split(" ")[0];
-          setFirstName(first);
+        if (profile?.full_name) {
+          displayName = profile.full_name;
+        } else if (user.user_metadata?.full_name) {
+          displayName = user.user_metadata.full_name;
+        } else if (user.user_metadata?.name) {
+          displayName = user.user_metadata.name;
+        } else if (user.identities?.[0]?.identity_data?.full_name) {
+          displayName = user.identities[0].identity_data.full_name;
+        } else {
+          displayName = user.email.split('@')[0];
         }
+
+        // 3. Formata o primeiro nome
+        const first = displayName.split(" ")[0];
+        setFirstName(first ? first.charAt(0).toUpperCase() + first.slice(1) : "");
+
       } catch (error) {
-        console.error("Erro ao buscar dados do usuário:", error);
-        setFirstName(""); // Limpa se houver erro
+        console.error("Erro ao buscar perfil:", error);
+        setFirstName("");
       }
     };
 
-    fetchUserData();
+    const checkAuthState = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        await fetchUserProfile(session.user);
+      }
+    };
 
-    // Listener para mudanças de autenticação
+    checkAuthState();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (event === 'SIGNED_IN') {
-          await fetchUserData();
+        if (event === 'SIGNED_IN' && session?.user) {
+          await fetchUserProfile(session.user);
         } else if (event === 'SIGNED_OUT') {
           setFirstName("");
         }
