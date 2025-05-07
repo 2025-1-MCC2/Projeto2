@@ -5,18 +5,87 @@ import { MdMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import ResponsiveMenu from "./ResponsiveMenu.jsx";
 import instituto_criativo_logo from "../../assets/instituto_criativo_logo.png";
+import { supabase } from "../../../lib/supabaseClient.js";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [firstName, setFirstName] = useState("");
 
-  // Verifica se há um nome de usuário no localStorage ao carregar o componente
+  // Verifica e monitora o estado de autenticação
   useEffect(() => {
-    const name = localStorage.getItem("userName");
-    if (name) {
-      setUserName(name);
-    }
+    const checkAuthState = async () => {
+      try {
+        // 1. Verifica a sessão atual
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          await fetchUserProfile(session.user);
+        }
+      } catch (error) {
+        console.error("Erro ao verificar autenticação:", error);
+      }
+    };
+
+    const fetchUserProfile = async (user) => {
+      try {
+        // 1. Tenta pegar da tabela profiles
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('full_name, email')
+          .eq('id', user.id)
+          .single();
+    
+        if (profileError && profileError.code !== 'PGRST116') throw profileError;
+    
+        // 2. Define o nome com fallbacks inteligentes
+        let displayName = "";
+        
+        if (profile?.full_name) {
+          displayName = profile.full_name;
+        } else if (user.user_metadata?.full_name) {
+          displayName = user.user_metadata.full_name;
+        } else {
+          // Fallback: pega a parte antes do @ no email
+          displayName = user.email.split('@')[0];
+        }
+    
+        // 3. Extrai apenas o primeiro nome
+        const first = displayName.split(" ")[0];
+        setFirstName(first || "Usuário"); // Fallback final
+    
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+        setFirstName(user?.email?.split('@')[0] || "Usuário");
+      }
+    };
+
+    checkAuthState();
+
+    // Configura listener para mudanças de autenticação
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          await fetchUserProfile(session.user);
+        } else if (event === 'SIGNED_OUT') {
+          setFirstName("");
+        }
+      }
+    );
+
+    return () => subscription?.unsubscribe();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      setFirstName("");
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    }
+  };
 
   return (
     <>
@@ -64,27 +133,25 @@ const Navbar = () => {
 
           {/* CTA Button section */}
           <div className="hidden lg:block space-x-6">
-            {userName ? (
+            {firstName ? (
               <div className="flex items-center gap-4">
-                <span className="text-secondary font-semibold">Olá, {userName}!</span>
+                <span className="text-secondary font-semibold">Olá, {firstName}!</span>
                 <button
-                  onClick={() => {
-                    localStorage.removeItem("userName");
-                    setUserName(""); // Limpa o estado
-                    window.location.reload(); // Recarrega a página (opcional)
-                  }}
-                  className="text-white bg-red-500 font-semibold rounded-full px-4 py-2"
+                  onClick={handleLogout}
+                  className="text-white bg-red-500 font-semibold rounded-full px-4 py-2 hover:bg-red-600 transition-colors"
                 >
-                  Logout
+                  Sair
                 </button>
               </div>
             ) : (
               <>
                 <Link to="/auth">
-                  <button className="font-semibold">Login</button>
+                  <button className="font-semibold hover:text-secondary transition-colors">
+                    Entrar
+                  </button>
                 </Link>
                 <Link to="/auth?mode=signup">
-                  <button className="text-white bg-secondary font-semibold rounded-full px-6 py-2">
+                  <button className="text-white bg-secondary font-semibold rounded-full px-6 py-2 hover:bg-secondary-dark transition-colors">
                     Inscreva-se
                   </button>
                 </Link>
@@ -94,7 +161,7 @@ const Navbar = () => {
 
           {/* Mobile Hamburger Menu */}
           <div className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-            <MdMenu className="text-4xl" />
+            <MdMenu className="text-4xl cursor-pointer hover:text-secondary transition-colors" />
           </div>
         </div>
       </motion.div>
