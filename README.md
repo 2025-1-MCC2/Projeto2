@@ -8,7 +8,7 @@
 
 ### 👥 Equipe de Desenvolvimento
 - <a href="https://github.com/BrunoSouza06">**Bruno Souza Lima**</a>
-- <a href="https://github.com/brenocosta19">**Breno Costa Nascimento**</a>
+- <a href="https://github.com/brenocosta19">**Breno Costa do Nascimento**</a>
 - <a href="https://github.com/Yamaschita">**Felipe Yamaschita**</a>
 - <a href="https://github.com/Marcos-Yogi">**Marcos Hiroshi**</a>
 - <a href="https://github.com/Vinishireis">**Vinícius Nishimura Reis**</a>
