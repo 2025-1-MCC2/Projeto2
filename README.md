@@ -62,22 +62,32 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 │   ├── 🔗 Index.html       # Site com o Link do Gráfico
 │   ├── 📜 Main.js          # Código JS do gráfico
 │   └── 📜 package.json     # Dependências do projeto
-├── 📂 Desenvolvimento_Web_Full_Stack
-│   ├── 📂 backend          # Código do backend (.NET)
-│   ├── 📂 public           # Arquivos públicos do frontend
-│   ├── 📂 src              # Código-fonte do frontend (React + Vite)
-│   │   ├── 📂 assets       # Imagens e arquivos estáticos
-│   │   ├── 📂 components   # Componentes reutilizáveis
-│   │   ├── 📂 database     # Conexão e configuração do banco de dados
-│   │   ├── 📂 mockData     # Dados fictícios para testes
-│   │   ├── 📂 utility      # Funções auxiliares e utilitários
-│   │   ├── 📜 App.jsx      # Componente raiz da aplicação
-│   │   ├── 📜 index.css    # Estilos globais
-│   │   └── 📜 main.jsx     # Arquivo principal do React
-│   ├── 📜 .env             # Configurações de ambiente
-│   ├── 📜 package.json     # Dependências do projeto
-│   ├── 📜 tailwind.config.js # Configuração do Tailwind CSS
-│   └── 📜 vite.config.js   # Configuração do Vite
+├── 📦 Desenvolvimento_Web_Full_Stack
+├── 📂 Site
+│ └── 📂 TaskManager
+│ ├── 📂 backend
+│ │ ├── 📂 config
+│ │ ├── 📂 controllers
+│ │ ├── 📂 middlewares
+│ │ ├── 📂 models
+│ │ ├── 📂 node_modules
+│ │ ├── 📂 routes
+│ │ ├── 📂 uploads
+│ │ ├── 📜 .env
+│ │ ├── 📜 package-lock.json
+│ │ ├── 📜 package.json
+│ │ └── 📜 server.js
+│ └── 📂 frontend/Task-Manager
+│ ├── 📂 node_modules
+│ ├── 📂 public
+│ ├── 📂 src
+│ ├── 📜 .gitignore
+│ ├── 📜 eslint.config.js
+│ ├── 📜 index.html
+│ ├── 📜 package-lock.json
+│ ├── 📜 package.json
+│ ├── 📜 README.md
+│ └── 📜 vite.config.js
 ├── 📂 Gestão_Empresarial_e_Dinâmicas_das_Organizações
 │   ├── 📜 Trabalho_ONG_Completo_ABNT.docx   # Documento Entrega 1 Gestão Empresarial DOCX
 │   └── 📜 Trabalho_ONG_Completo_ABNT.pdf    # Documento Entrega 1 Gestão Empresarial PDF
